@@ -3,19 +3,27 @@
 <head>
   <meta charset="utf-8">
   <title>Pay Rate</title>
-  <link href="/index.css" rel="stylesheet">
+  <link href="./index.css" rel="stylesheet">
 </head>
 <body>
   <h1>Pay Rate</h1>
 
-  <!-- <select>
-    <option value=""></option>
-  </select> -->
+<!-- Current rate will display here  -->
+  <div id="displayContainer">
+    <div id="currentRate"></div>
+  </div>
 
-  <!-- <input>Base Rate</input> -->
+  <br>
+  <br>
 
-  <!-- <button>+</button> -->
-  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-  <script src="/index.js"></script>
+  <div id="baseRateContainer">
+    <label for="baseRate">Base Rate of Pay:</label>
+    <input type="text" name="baseRate" id="baseRate"/>
+    <button id="submitBaseRate">gogogo</button>
+  </div>
+
+
+  <script src="./jquery-2.1.1.min.js"></script>
+  <script src="./index.js"></script>
 </body>
 </html>
