@@ -7,12 +7,12 @@
 
   function init(){
 //------My listeners:--------
-    $('#submitBaseRate').click(setBaseRate);
-    $('#addRule').click(newRule);
+    $('#submitBaseRate').on('click', setBaseRate);
+    $('#addRule').on('click', newRule);
+    $('#ruleDisplay').on('click', '.closeButton', this, deleteRow);
   };
 
   var originBaseRate = 0;
-  var totalRules = 0;
 
   function display(newRate){
     $('#currentRate').text('Your current rate: '+newRate+'/hr');
@@ -27,24 +27,25 @@
   };
 
   function newRule(){
-    totalRules += 1;
+    /*
+      rowString creates a select, two inputs, and a close button
 
-    var bigString = "<div id=div"
-                    +totalRules.toString()+
-                    "><input id=input"
-                    +totalRules+
-                    "><button>X</button></div>"
+      div
+        select
+          option
+          option
+        input (Base rate modifier)
+        input (Modifier description)
+        button (delete row)
 
-    $('#ruleDisplay').append(bigString);
+    */
 
+    var rowString = '<div><select><option value="plus">+</option><option value="minus">-</option></select><input class="baseRateMod" placeholder="Base rate mod"/><input class="modDescription" placeholder="Description"/><button class="closeButton">X</button></div>';
+    $('#ruleDisplay').append(rowString);
+  };
 
-    // var divBegin =
-    // var divEnd =
-    // var ruleBegin = '<input id=rule';
-    // var ruleEnd = '><button>x</button><br>'
-    //
-    // var concatRule = 'ruleBegin+totalRules+ruleEnd
-    // $('#ruleDisplay').append(concatRule);
+  function deleteRow(row){
+    $(row.currentTarget).parent().remove();
   };
 
   // function increaseRate(){};
