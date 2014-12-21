@@ -10,7 +10,10 @@
     $('#submitBaseRate').on('click', setBaseRate);
     $('#addRule').on('click', newRule);
     $('#ruleDisplay').on('click', '.closeButton', this, deleteRow);
-    $('#calculate').on('click', calculate);
+    $('#ruleDisplay').on('submit', '.ruleRow', function(event){
+      event.preventDefault();
+      applyRule(event);
+    });
   };
 
   var originBaseRate = 0;
@@ -29,61 +32,83 @@
 
   function newRule(){
     /*    rowString creates a select, two inputs, and a close button
-      div
-        select
-          option (+)
-          option (-)
-        input (Base rate modifier)
-        input (Modifier description)
-        button (delete row)
+      form.ruleRow
+        input
+        input
+        submit button .submit
+      /form
     */
 
-    var rowString = '<div class="row">$<input class="baseRateMod" placeholder="-10"/>/hr<br><input class="modDescription" placeholder="Description"/><button class="closeButton">X</button></div>';
+    var rowString = '<form class="ruleRow">$<input type="text" name="hourlyRateMod" placeholder="-20">/hr<br><input type="text" placeholder="Description" name="description"><input type="submit" class="submit"></form>';
     $('#ruleDisplay').append(rowString);
   };
 
   function deleteRow(row){
+    /* Deletes a button's parent (div.row) */
     $(row.currentTarget).parent().remove();
   };
 
-  function calculate(){
-    /* CONDENSE THIS!!!!! */
-    var mod;
-    var $base = $('.baseRateMod');
-    if($base.length > 1){
-      mod = $base;
-      for(var i =0; i < $base.length; i++){
-        if(mod[i].value == ""){
-          console.log('null');
-        }else if(mod[i].value > 0){
-          console.log('positive number');
-        }else if(mod[i].value == 0){
-          console.log('zero');
-        }else if(mod[i].value < 0){
-          console.log('negative number');
-        }else{
-          console.log('error catch');
-        }
-      }
+  function applyRule(caughtEvent){
+    var mod = caughtEvent.currentTarget[0].value;
+    var descript = caughtEvent.currentTarget[1].value;
+    console.log(mod);
+    console.log(descript);
+    if(mod == ""){
+      console.log('null error catch');
+    }else if(mod > 0){
+      increaseRate(mod);
+    }else if(mod == 0){
+      console.log('zero error catch');
+    }else if(mod < 0){
+      decreaseRate(mod);
     }else{
-      mod = $base.val();
-      for(var i =0; i < $base.length; i++){
-        console.log(mod);
-        if(mod == ""){
-          console.log('null');
-        }else if(mod > 0){
-          console.log('positive number');
-        }else if(mod == 0){
-          console.log('zero');
-        }else if(mod < 0){
-          console.log('negative number');
-        }else{
-          console.log('error catch');
-        };
-      }
-    }
+      console.log('input error catch (probably a faceroll)');
+    };
   };
 
-  // function increaseRate(){};
-  // function decreaseRate(){};
+  // function calculate(){
+    //
+    // /* CONDENSE THIS!!!!! (aka case statement) */
+    // var mod;
+    // var $base = $('.baseRateMod');
+    // if($base.length > 1){
+    //   mod = $base;
+    //   for(var i =0; i < $base.length; i++){
+    //     if(mod[i].value == ""){
+    //       console.log('null error catch');
+    //     }else if(mod[i].value > 0){
+    //       increaseRate(mod);
+    //     }else if(mod[i].value == 0){
+    //       console.log('zero error catch');
+    //     }else if(mod[i].value < 0){
+    //       decreaseRate(mod);
+    //     }else{
+    //       console.log('input error catch');
+    //     }
+    //   }
+    // }else{
+    //   mod = $base.val();
+    //   for(var i =0; i < $base.length; i++){
+    //     if(mod == ""){
+    //       console.log('null error catch');
+    //     }else if(mod > 0){
+    //       increaseRate(mod);
+    //     }else if(mod == 0){
+    //       console.log('zero error catch');
+    //     }else if(mod < 0){
+    //       decreaseRate(mod);
+    //     }else{
+    //       console.log('input error catch');
+    //     };
+    //   }
+    // }
+  // };
+
+  function increaseRate(mod){
+    console.log('increaseRate: ' + mod);
+
+  };
+  function decreaseRate(mod){
+    console.log('decreaseRate: '+ mod);
+  };
 })();
