@@ -1,11 +1,7 @@
 body{
-  background-color: #cccccc;
+  background-color: #93c57a;
   background-image: url("trianglify-background.svg");
   text-align: center;
-}
-#baseRateContainer{
-  /* first base rate input*/
-
 }
 #controlsContainer{
   /* new row button */

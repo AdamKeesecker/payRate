@@ -19,7 +19,7 @@
   var currentRate = 0;
 
   function display(newRate){
-    console.log(newRate);
+    /* updates the current rate on submit */
     $('#currentRate').text('Your current rate: $ ' + newRate + '/hr');
     if(newRate < 0){
       $('#currentRate').text('Your current rules are making you pay the client!!!');
@@ -27,15 +27,14 @@
   };
 
   function setBaseRate(){
+    /* reads input, sets base rate, and shows new controls */
     originBaseRate = $('#baseRate').val();
-    console.log(originBaseRate);
     if(originBaseRate == isNaN){
       originBaseRate = 0;
     }
     display(originBaseRate);
     $('#baseRateContainer').hide();
     $('#controlsContainer').css("visibility", "visible");
-    $('#disappear').fadeOut({duration:5200});
   };
 
   function newRule(){
@@ -52,81 +51,43 @@
   };
 
   function moveRule(row){
+    /* moves rule (.row) out of form and into active div */
     row.remove();
-    console.log(row);
     var ruleAmount = row[0].value;
     var ruleDescript = row[1].value;
     $('#activeRules').append("<div>" + ruleAmount + " : " + ruleDescript + "</div><br>");
   };
 
   function applyRule(caughtEvent){
+    /* takes values and applies math to current and appends text for descript */
     var mod = caughtEvent.currentTarget[0].value;
     var descript = caughtEvent.currentTarget[1].value;
-    console.log(mod);
-    console.log(descript);
     if(mod == ""){
+      // empty field
       console.log('null error catch');
     }else if(mod > 0){
+      // positive number
       increaseRate(mod);
     }else if(mod == 0){
+      // zero
       console.log('zero error catch');
     }else if(mod < 0){
+      // negative number
       decreaseRate(mod);
     }else{
+      // General error catch (usually letters in input)
       console.log('input error catch (probably a faceroll)');
     };
     moveRule(caughtEvent.currentTarget);
   };
 
-  // function calculate(){
-    //
-    // /* CONDENSE THIS!!!!! (aka case statement) */
-    // var mod;
-    // var $base = $('.baseRateMod');
-    // if($base.length > 1){
-    //   mod = $base;
-    //   for(var i =0; i < $base.length; i++){
-    //     if(mod[i].value == ""){
-    //       console.log('null error catch');
-    //     }else if(mod[i].value > 0){
-    //       increaseRate(mod);
-    //     }else if(mod[i].value == 0){
-    //       console.log('zero error catch');
-    //     }else if(mod[i].value < 0){
-    //       decreaseRate(mod);
-    //     }else{
-    //       console.log('input error catch');
-    //     }
-    //   }
-    // }else{
-    //   mod = $base.val();
-    //   for(var i =0; i < $base.length; i++){
-    //     if(mod == ""){
-    //       console.log('null error catch');
-    //     }else if(mod > 0){
-    //       increaseRate(mod);
-    //     }else if(mod == 0){
-    //       console.log('zero error catch');
-    //     }else if(mod < 0){
-    //       decreaseRate(mod);
-    //     }else{
-    //       console.log('input error catch');
-    //     };
-    //   }
-    // }
-  // };
-
   function increaseRate(mod){
-    console.log('increaseRate mod: ' + mod);
     currentRate = currentRate + Math.round(mod);
-    console.log('increaseRate current: ' + currentRate);
     display(currentRate);
   };
 
   function decreaseRate(mod){
-    console.log('decreaseRate mod: ' + mod);
     currentRate = currentRate + Math.round(mod);
-    console.log('decreaseRate current: ' + currentRate);
     display(currentRate);
   };
 
