@@ -9,7 +9,6 @@
     /*My listeners:*/
     $('#submitBaseRate').on('click', setBaseRate);
     $('#addRule').on('click', newRule);
-    // $('#ruleDisplay').on('click', '.closeButton', this, deleteRow);
     $('#ruleDisplay').on('submit', '.ruleRow', function(event){
       event.preventDefault();
       applyRule(event);
@@ -20,6 +19,7 @@
   var currentRate = 0;
 
   function display(newRate){
+    console.log(newRate);
     $('#currentRate').text('Your current rate: $ ' + newRate + '/hr');
     if(newRate < 0){
       $('#currentRate').text('Your current rules are making you pay the client!!!');
@@ -56,7 +56,7 @@
     console.log(row);
     var ruleAmount = row[0].value;
     var ruleDescript = row[1].value;
-    $('#activeRules').append(ruleAmount + " : " + ruleDescript);
+    $('#activeRules').append("<div>" + ruleAmount + " : " + ruleDescript + "</div><br>");
   };
 
   function applyRule(caughtEvent){
@@ -117,14 +117,16 @@
   // };
 
   function increaseRate(mod){
-    console.log('increaseRate: ' + mod);
-    currentRate = Math.round(currentRate) + Math.round(mod);
+    console.log('increaseRate mod: ' + mod);
+    currentRate = currentRate + Math.round(mod);
+    console.log('increaseRate current: ' + currentRate);
     display(currentRate);
   };
 
   function decreaseRate(mod){
-    console.log('decreaseRate: ' + mod);
+    console.log('decreaseRate mod: ' + mod);
     currentRate = currentRate + Math.round(mod);
+    console.log('decreaseRate current: ' + currentRate);
     display(currentRate);
   };
 
