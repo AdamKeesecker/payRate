@@ -9,7 +9,7 @@
     /*My listeners:*/
     $('#submitBaseRate').on('click', setBaseRate);
     $('#addRule').on('click', newRule);
-    $('#ruleDisplay').on('click', '.closeButton', this, deleteRow);
+    // $('#ruleDisplay').on('click', '.closeButton', this, deleteRow);
     $('#ruleDisplay').on('submit', '.ruleRow', function(event){
       event.preventDefault();
       applyRule(event);
@@ -17,13 +17,21 @@
   };
 
   var originBaseRate = 0;
+  var currentRate = 0;
 
   function display(newRate){
-    $('#currentRate').text('Your current rate: '+newRate+'/hr');
+    $('#currentRate').text('Your current rate: $ ' + newRate + '/hr');
+    if(newRate < 0){
+      $('#currentRate').text('Your current rules are making you pay the client!!!');
+    }
   };
 
   function setBaseRate(){
     originBaseRate = $('#baseRate').val();
+    console.log(originBaseRate);
+    if(originBaseRate == isNaN){
+      originBaseRate = 0;
+    }
     display(originBaseRate);
     $('#baseRateContainer').hide();
     $('#controlsContainer').css("visibility", "visible");
@@ -43,9 +51,12 @@
     $('#ruleDisplay').append(rowString);
   };
 
-  function deleteRow(row){
-    /* Deletes a button's parent (div.row) */
-    $(row.currentTarget).parent().remove();
+  function moveRule(row){
+    row.remove();
+    console.log(row);
+    var ruleAmount = row[0].value;
+    var ruleDescript = row[1].value;
+    $('#activeRules').append(ruleAmount + " : " + ruleDescript);
   };
 
   function applyRule(caughtEvent){
@@ -64,6 +75,7 @@
     }else{
       console.log('input error catch (probably a faceroll)');
     };
+    moveRule(caughtEvent.currentTarget);
   };
 
   // function calculate(){
@@ -106,9 +118,14 @@
 
   function increaseRate(mod){
     console.log('increaseRate: ' + mod);
+    currentRate = Math.round(currentRate) + Math.round(mod);
+    display(currentRate);
+  };
 
-  };
   function decreaseRate(mod){
-    console.log('decreaseRate: '+ mod);
+    console.log('decreaseRate: ' + mod);
+    currentRate = currentRate + Math.round(mod);
+    display(currentRate);
   };
+
 })();
